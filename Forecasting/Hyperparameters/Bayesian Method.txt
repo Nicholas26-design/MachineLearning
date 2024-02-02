@@ -1,0 +1,9 @@
+SARIMAX (Seasonal Autoregressive Integrated Moving Average with exogenous variables) and Bayesian optimization can work together. 
+
+Bayesian optimization can be used to tune hyperparameters of SARIMAX models, optimizing its performance based on a defined objective function.
+
+You can use Bayesian optimization libraries like scikit-optimize or BayesianOptimization in Python. 
+
+Define a SARIMAX model with hyperparameters as variables to be optimized, set an objective function (e.g., mean squared error), and let Bayesian optimization iteratively suggest parameter values to find the optimal combination for your SARIMAX model.
+
+Objective function would be rmse. 

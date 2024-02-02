@@ -1,0 +1,13 @@
+Your approach looks great! It appears you're using a nested loop to iterate through different combinations of SARIMAX parameters (`pdq` and `seasonal_pdq`) and then fitting the SARIMAX model for each combination. This is a common and effective method for parameter tuning in SARIMAX models.
+
+You're logging the parameters and evaluation metrics using MLflow, which is a good practice for keeping track of the experiment runs and their respective results.
+
+It's crucial to note that this exhaustive search through all combinations can be computationally expensive, especially with larger parameter spaces or longer time series data. In such cases, it might be worth considering parallelization techniques (using libraries like `joblib` or `multiprocessing`) to speed up the computation by running multiple parameter combinations simultaneously on different CPU cores.
+
+Additionally, monitoring the training process and experimenting with a subset of combinations initially can help estimate the time it might take to explore the entire parameter space. This way, you can adjust the approach or parameters if the process takes too long.
+
+Lastly, if the total execution time is significantly long, you might consider narrowing down the parameter search space or using optimization methods like random search to efficiently explore the parameter combinations without exhaustively trying all combinations.
+
+Overall, your code structure seems well-organized for performing hyperparameter tuning for SARIMAX models. Keep an eye on computational resources and execution time, and feel free to optimize or adjust the approach based on your requirements and constraints.
+
+Techniques like grid search can be computationally expensive. In practice, you might consider using randomized search, Bayesian optimization, or other methods that efficiently explore the parameter space. Additionally, it's crucial to select a meaningful evaluation metric (like AIC, BIC, etc.) to compare models and avoid overfitting.

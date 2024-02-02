@@ -1,0 +1,14 @@
+Bayesian optimization:
+
+
+Useful for optimizing optimizing expensive, black-box functions.
+
+What is a blackbox function?
+
+In the context of optimization and machine learning, a black-box function refers to a mathematical or computational function for which the internal details are unknown, 
+
+Example:
+
+Let's consider an example of a black-box function in the context of hyperparameter tuning for a machine learning model. The goal in hyperparameter tuning is to find the set of hyperparameters that yield the best performance for a given model. The performance is typically measured using a validation metric, such as accuracy, precision, or mean squared error.
+
+In this context, the black-box function is the performance metric of the machine learning model, and the goal is to find the set of hyperparameters that maximizes (or minimizes) this metric. The function is "black-box" because the specific relationship between hyperparameters and performance is not explicitly known and may be influenced by various factors.
