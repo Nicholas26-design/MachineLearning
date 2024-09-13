@@ -1,0 +1,1 @@
+Data obtained from https://www.redfin.com/news/data-center/ 
