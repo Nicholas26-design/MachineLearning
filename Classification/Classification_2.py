@@ -52,9 +52,9 @@ os.chdir(desired_working_directory)
 """
 Load dataset 
 """
-iris = load_iris()
-X = iris.data
-y = iris.target
+# Load the Iris dataset
+# Context: The Iris dataset contains measurements of sepal length, sepal width, petal length, and petal width for three flower species.
+data = pd.read_csv('iris.csv')
 
 """
 Cleaning Data 
@@ -98,20 +98,36 @@ train_test_split
 # y_train: Labels of the training set
 # y_test: Labels of the testing set
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+# Split the data into training and testing sets
+# Context: Splitting ensures the model is evaluated on unseen data.
+X = data[['sepal_length', 'sepal_width', 'petal_length', 'petal_width']]
+y = data['species']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 """
 Modeling
 """
-clf = tree.DecisionTreeClassifier()
-# Train the model using the training set
-clf.fit(X_train, y_train)
-clf.get_params()
+# Train a Decision Tree Classifier
+# Context: Decision Trees are interpretable models that can visualize decision boundaries.
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+
+# Evaluate the model
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Model Accuracy: {accuracy:.2f}")
+
+# Visualize the decision tree
+# Context: This helps understand how the model makes predictions.
+plt.figure(figsize=(12, 8))
+plot_tree(model, feature_names=X.columns, class_names=model.classes_, filled=True)
+plt.show()
+
 """
 feature importances
 """
 # Get feature importances
-feature_importances = clf.feature_importances_
+feature_importances = model.feature_importances_
 
 # Create a DataFrame to display feature importances
 feature_importance_df = pd.DataFrame({'Feature': X.columns, 'Importance Percentage': feature_importances})
@@ -132,7 +148,7 @@ plt.show()
 
 # Plot the decision tree
 plt.figure(figsize=(12, 8))
-plot_tree(clf, filled=True, feature_names=iris.feature_names, class_names=iris.target_names, rounded=True)
+plot_tree(model, filled=True, feature_names=iris.feature_names, class_names=iris.target_names, rounded=True)
 # Visualize the decision tree
 plt.show()
 
@@ -140,7 +156,7 @@ plt.show()
 predictions
 """
 # Make predictions on the testing set
-predictions = clf.predict(X_test)
+predictions = model.predict(X_test)
 
 # Create a DataFrame with new data and predictions
 result_df = pd.DataFrame(data=X_test, columns=X_test.columns)
@@ -193,7 +209,7 @@ new_data = copied_df_clean
 new predictions
 """
 # Assuming 'new_data' contains the features of new instances
-new_predictions = clf.predict(new_data)
+new_predictions = model.predict(new_data)
 
 # Create a DataFrame with new data and predictions
 result_df = pd.DataFrame(data=new_data, columns=new_data.columns)

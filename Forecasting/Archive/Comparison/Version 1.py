@@ -1,3 +1,20 @@
+# Import necessary libraries
+import numpy as np
+import pandas as pd
+from statsmodels.tsa.arima.model import ARIMA
+from sklearn.metrics import mean_squared_error
+import itertools
+import statsmodels.api as sm
+import mlflow
+
+# Load the dataset
+# Context: This dataset contains time series data for forecasting.
+data = pd.read_csv('time_series_data.csv', index_col='date', parse_dates=True)
+
+# Split the data into training and testing sets
+# Context: Training data is used to fit the model, and testing data is used for evaluation.
+train, test = data[:'2023'], data['2024':]
+
 # Best version of AIC
 
 class ModelCombination:
@@ -28,9 +45,6 @@ def find_best_model(y):
                                                 enforce_invertibility=True)
                 results = mod.fit(disp=False)
                 aic = results.aic
- 
-                
-
 
                 # Check if current AIC is the best so far
                 if aic < best_aic:
@@ -55,14 +69,30 @@ def find_best_model(y):
     else:
         print("No valid model found")
 
-
-
 # I need this part
-model_uri, overall_results = find_best_model(Training_data)
+model_uri, overall_results = find_best_model(train)
 model_uri = model_uri
 results = overall_results
 print(model_uri)
 print(results.summary())
 # Load the saved model
 loaded_model = mlflow.statsmodels.load_model(model_uri)
+
+# Fit an ARIMA model
+# Context: ARIMA is a popular model for time series forecasting.
+model = ARIMA(train, order=(1, 1, 1))
+model_fit = model.fit()
+
+# Make predictions
+predictions = model_fit.forecast(steps=len(test))
+mse = mean_squared_error(test, predictions)
+print(f"Mean Squared Error: {mse:.2f}")
+
+# Plot the results
+# Context: Visualizing predictions helps assess model performance.
+import matplotlib.pyplot as plt
+plt.plot(test, label='Actual')
+plt.plot(predictions, label='Predicted', color='red')
+plt.legend()
+plt.show()
 
