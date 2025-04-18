@@ -1,6 +1,0 @@
-Question:
- surely plotting a graph in python isn't super relevant to ML/AI is it? 
-
-Answer:
-Most ML is done using Python.  You need to be proficient with some type of graphing library (i.e. matplotlib) so you can visualize your data so that you understand it better, and also you will be using matplotlib to graph your results of your training/validation (for example, plotting loss over each epic/iteration to see that loss is decreasing and that the model is learning).  Plotting the data to understand the data better will help you see relationships between various independent variables and perhaps allow you to decide to create additional features which can then be used to help your model learn.  A simple example of this is doing a scatter plot on your data and then visually seeing that there could be natural clusters formed in your data; then that might tip you off that you need to use K-means clustering to train for those clusters, and use that to predict some output category.   
-
